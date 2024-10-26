@@ -1,7 +1,6 @@
 part of 'ttt_app.dart';
 
-final FirebaseAnalyticsObserver _firebaseAnalyticsObserver =
-    FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
+FirebaseAnalyticsObserver? _firebaseAnalyticsObserver;
 
 extension RouteAppStoreExtension on AppStoreInterface {
   FirebaseRemoteService get remoteConfigService =>
@@ -9,8 +8,11 @@ extension RouteAppStoreExtension on AppStoreInterface {
 
   FirebaseService get firebaseService => FirebaseService.instance;
 
-  FirebaseAnalyticsObserver get firebaseAnalyticsObserver =>
-      _firebaseAnalyticsObserver;
+  FirebaseAnalyticsObserver get firebaseAnalyticsObserver {
+    _firebaseAnalyticsObserver ??=
+        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
+    return _firebaseAnalyticsObserver!;
+  }
 
   /// Get a location from route name and parameters.
   ///
@@ -134,11 +136,12 @@ extension RouteAppStoreExtension on AppStoreInterface {
     Map<String, String> pathParameters = const <String, String>{},
     Map<String, dynamic> queryParameters = const <String, dynamic>{},
     Object? extra,
-  }) =>
-      GoRouter.of(context).replaceNamed<Object?>(
-        name,
-        pathParameters: pathParameters,
-        queryParameters: queryParameters,
-        extra: extra,
-      );
+  }) {
+    GoRouter.of(context).replaceNamed<Object?>(
+      name,
+      pathParameters: pathParameters,
+      queryParameters: queryParameters,
+      extra: extra,
+    );
+  }
 }

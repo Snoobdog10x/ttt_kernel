@@ -52,24 +52,11 @@ abstract class TttController extends State<TttControllerProvider>
   }
 
   @protected
-  @override
-  void didUpdateWidget(covariant TttControllerProvider oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (widget.tag == oldWidget.tag) {
-      return;
-    }
-
-    AppStore.removeByRuntimeType(runtimeType, tag: oldWidget.tag);
-    AppStore.registerByRuntimeType(this, tag: widget.tag);
-  }
-
-  @protected
   @mustCallSuper
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return widget.viewBuilder();
+    return widget.view;
   }
 
   @protected

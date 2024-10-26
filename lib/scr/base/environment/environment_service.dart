@@ -45,7 +45,7 @@ class EnvironmentService extends TttService implements EnvironmentMixin {
       );
 
   @override
-  InitPriority get initPriority => InitPriority.ON_SPLASH;
+  InitPriority get initPriority => InitPriority.ON_START_UP;
 
   @override
   FirebaseOptions? get firebaseOptions => getVariable(

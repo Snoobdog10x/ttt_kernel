@@ -11,7 +11,7 @@ extension AppServiceInitializerExtension on AppStoreInterface {
       return;
     }
 
-    logInfo("On start up");
+    logInfo("On $filter");
     var filterServices =
         services.where((service) => service.initPriority == filter).toList();
     filterServices.sort((a, b) => a.order.compareTo(b.order));

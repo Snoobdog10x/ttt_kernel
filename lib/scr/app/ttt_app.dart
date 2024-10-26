@@ -9,7 +9,6 @@ import 'package:go_router/go_router.dart';
 
 import '../base/app_store.dart';
 import '../locale/locale_service.dart';
-import '../stream/ttt_stream.dart';
 
 part 'firebase_remote_service.dart';
 part 'firebase_service.dart';
@@ -28,10 +27,13 @@ class TttApp extends StatefulWidget {
 }
 
 class TttAppState<T extends TttApp> extends State<T> with LoggerMixin {
+  Widget? _materialApp;
+
   @override
   void initState() {
     super.initState();
     AppStore.environmentService.addSharedVariable(widget.sharedVariables);
+    AppStore.firebaseService;
     _initApp();
   }
 
@@ -50,26 +52,24 @@ class TttAppState<T extends TttApp> extends State<T> with LoggerMixin {
       return const SizedBox();
     }
 
-    return Watcher(
-      () {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: GoRouter(
-            navigatorKey: AppStore.navigatorKey,
-            routes: AppStore.routers,
-            observers: [AppStore.firebaseAnalyticsObserver],
-          ),
-          locale: LocaleService.instance.currentLocale.value,
-          supportedLocales: LocaleService.instance.supportedLocales,
-          theme: themeData,
-          themeMode: themeMode,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-        );
-      },
+    _materialApp ??= MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: GoRouter(
+        navigatorKey: AppStore.navigatorKey,
+        routes: AppStore.routers,
+        observers: [AppStore.firebaseAnalyticsObserver],
+      ),
+      locale: LocaleService.instance.currentLocale.value,
+      supportedLocales: LocaleService.instance.supportedLocales,
+      theme: themeData,
+      themeMode: themeMode,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
     );
+
+    return _materialApp!;
   }
 }
