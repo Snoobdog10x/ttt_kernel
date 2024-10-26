@@ -1,6 +1,4 @@
-import 'dart:async';
-
-import '../mixin/logger_mixin.dart';
+part of '../app_store.dart';
 
 mixin Disposable on LoggerMixin {
   FutureOr<void> onInit();

@@ -1,4 +1,6 @@
-import '../base/app_store_interface.dart';
+library ttt_di;
+
+import '../base/app_store.dart';
 
 final Map<String, dynamic> _instanceMap = {};
 

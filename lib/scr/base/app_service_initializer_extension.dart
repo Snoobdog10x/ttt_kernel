@@ -1,7 +1,4 @@
-import 'dart:async';
-
-import 'app_store_interface.dart';
-import 'disposable/ttt_service.dart';
+part of 'app_store.dart';
 
 InitPriority _initState = InitPriority.ON_START_UP;
 
@@ -10,7 +7,7 @@ extension AppServiceInitializerExtension on AppStoreInterface {
 
   Future<void> _onInitServices(InitPriority filter) async {
     if (_initState.index != filter.index) {
-      logWarning("already $filter!!!");
+      logInfo("already $filter!!!");
       return;
     }
 

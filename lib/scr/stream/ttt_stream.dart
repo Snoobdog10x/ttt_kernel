@@ -1,6 +1,13 @@
+library ttt_stream;
+
+import 'dart:collection';
+
 import 'package:flutter/widgets.dart';
 
-import 'watcher.dart';
+part 'ttt_list.dart';
+part 'ttt_map.dart';
+part 'ttt_set.dart';
+part 'watcher.dart';
 
 class TttStream<T> extends ValueNotifier<T> {
   TttStream(super.value);

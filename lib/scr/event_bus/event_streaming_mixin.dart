@@ -1,6 +1,4 @@
-import 'dart:async';
-
-import 'ttt_event.dart';
+part of 'event_bus_service.dart';
 
 mixin EventStreamingMixin {
   Stream<TttEvent> get _stream => _streamController.stream;

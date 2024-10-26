@@ -1,11 +1,4 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
-
-import '../../event_bus/bloc.dart';
-import '../app_store.dart';
-import '../mixin/logger_mixin.dart';
-import 'disposable.dart';
+part of '../app_store.dart';
 
 enum InitPriority {
   ON_START_UP,
@@ -56,20 +49,10 @@ abstract class TttService with LoggerMixin, Disposable {
   }
 
   @protected
-  @mustCallSuper
   @override
-  Future<void> onInit() async {
-    if (this is Bloc) {
-      (this as Bloc).listenEvents();
-    }
-  }
+  Future<void> onInit() async {}
 
   @protected
-  @mustCallSuper
   @override
-  Future<void> onDispose() async {
-    if (this is Bloc) {
-      (this as Bloc).disposeSubscriptions();
-    }
-  }
+  Future<void> onDispose() async {}
 }

@@ -1,5 +1,10 @@
-import '../base/app_store_interface.dart';
-import 'environment_service.dart';
+part of '../app_store.dart';
+
+enum SupportedVariable {
+  activeProfile,
+  routers,
+  firebaseOptions,
+}
 
 extension AppStoreAppInfoExtension on AppStoreInterface {
   EnvironmentService get environmentService => EnvironmentService.instance;

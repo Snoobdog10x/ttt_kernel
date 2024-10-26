@@ -1,6 +1,4 @@
-import 'package:flutter/widgets.dart';
-
-import 'ttt_controller.dart';
+part of "ttt_controller.dart";
 
 class TttControllerProvider extends StatefulWidget {
   final TttController Function() blocBuilder;

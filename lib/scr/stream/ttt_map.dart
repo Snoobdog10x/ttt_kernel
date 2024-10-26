@@ -1,6 +1,4 @@
-import 'dart:collection';
-
-import 'ttt_stream.dart';
+part of 'ttt_stream.dart';
 
 class TttMap<K, V> extends TttStream<Map<K, V>> with MapMixin<K, V> {
   TttMap(super.value);

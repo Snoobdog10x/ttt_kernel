@@ -1,12 +1,19 @@
+library ttt_app;
+
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
 
-import '../base/app_service_initializer_extension.dart';
 import '../base/app_store.dart';
-import '../base/disposable/ttt_service.dart';
-import '../environment/app_store_environment_extension.dart';
 import '../locale/locale_service.dart';
-import '../stream/watcher.dart';
+import '../stream/ttt_stream.dart';
+
+part 'firebase_remote_service.dart';
+part 'firebase_service.dart';
+part 'route_appstore_extension.dart';
 
 class TttApp extends StatefulWidget {
   final Map<String, dynamic> sharedVariables;
@@ -20,15 +27,15 @@ class TttApp extends StatefulWidget {
   State<TttApp> createState() => TttAppState();
 }
 
-class TttAppState<T extends TttApp> extends State<T> {
+class TttAppState<T extends TttApp> extends State<T> with LoggerMixin {
   @override
   void initState() {
     super.initState();
     AppStore.environmentService.addSharedVariable(widget.sharedVariables);
-    initApp();
+    _initApp();
   }
 
-  Future<void> initApp() async {
+  Future<void> _initApp() async {
     await AppStore.startUp();
     setState(() {});
   }
@@ -47,7 +54,11 @@ class TttAppState<T extends TttApp> extends State<T> {
       () {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          routerConfig: AppStore.router,
+          routerConfig: GoRouter(
+            navigatorKey: AppStore.navigatorKey,
+            routes: AppStore.routers,
+            observers: [AppStore.firebaseAnalyticsObserver],
+          ),
           locale: LocaleService.instance.currentLocale.value,
           supportedLocales: LocaleService.instance.supportedLocales,
           theme: themeData,

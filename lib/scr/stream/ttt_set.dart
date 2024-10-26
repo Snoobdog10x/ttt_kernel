@@ -1,8 +1,4 @@
-import 'dart:collection';
-
-import 'package:flutter/foundation.dart';
-
-import 'ttt_stream.dart';
+part of 'ttt_stream.dart';
 
 class TttSet<E> extends TttStream<Set<E>> with SetMixin<E> {
   TttSet(super.value);

@@ -1,10 +1,17 @@
+library ttt_controller;
+
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../ttt_kernel.dart';
-import '../base/mixin/logger_mixin.dart';
-import '../event_bus/bloc.dart';
-import 'ttt_controller_provider.dart';
+import '../base/app_store.dart';
+import '../di/app_store_di_extension.dart';
+import '../event_bus/event_bus_service.dart';
+import '../stream/ttt_stream.dart';
+
+part 'binding.dart';
+part 'ttt_controller_provider.dart';
+part 'ttt_multiple_controller_provider.dart';
+part 'ttt_view.dart';
 
 abstract class TttController extends State<TttControllerProvider>
     with LoggerMixin, Disposable, AutomaticKeepAliveClientMixin {
@@ -26,6 +33,7 @@ abstract class TttController extends State<TttControllerProvider>
     });
   }
 
+  @protected
   void onReady() {}
 
   @protected
@@ -64,6 +72,7 @@ abstract class TttController extends State<TttControllerProvider>
     return widget.viewBuilder();
   }
 
+  @protected
   void forceTreeRefresh() {
     if (!mounted) {
       return;
@@ -76,9 +85,11 @@ abstract class TttController extends State<TttControllerProvider>
   @override
   bool get wantKeepAlive => false;
 
+  @protected
   @override
   void onInit() {}
 
+  @protected
   @override
   void onDispose() {}
 }

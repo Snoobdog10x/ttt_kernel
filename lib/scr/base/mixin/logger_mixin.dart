@@ -1,5 +1,4 @@
-import '../app_store.dart';
-import '../app_store_interface.dart';
+part of '../app_store.dart';
 
 enum LogLevel {
   debug,

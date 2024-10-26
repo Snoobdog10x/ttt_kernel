@@ -1,10 +1,4 @@
-import 'dart:ui';
-
-import 'package:collection/collection.dart';
-import 'package:flutter/widgets.dart';
-import 'package:path/path.dart';
-
-import '../environment/environment_service.dart';
+part of 'locale_service.dart';
 
 enum SupportedLocale {
   ar_SA(

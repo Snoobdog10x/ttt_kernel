@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-
-import '../base/app_store_interface.dart';
-import '../base/disposable/ttt_service.dart';
-import 'environment_mixin.dart';
+part of '../app_store.dart';
 
 abstract class SharedConstants {
   static const String ASSET_PATH = "assets";
@@ -38,26 +33,23 @@ class EnvironmentService extends TttService implements EnvironmentMixin {
   }
 
   @override
-  ActiveProfile get activeProfile =>
-      getVariable("activeProfile", defaultValue: ActiveProfile.dev);
+  ActiveProfile get activeProfile => getVariable(
+        SupportedVariable.activeProfile.name,
+        defaultValue: ActiveProfile.dev,
+      );
 
   @override
-  bool get enabledAds => getVariable("enabledAds", defaultValue: false);
-
-  @override
-  bool get isFullAds => getVariable("isFullAds", defaultValue: false);
-
-  @override
-  bool? get fixedIsFullAds => getVariable("fixedIsFullAds", defaultValue: null);
-
-  @override
-  set isFullAds(bool isFullAds) {
-    setVariable("isFullAds", isFullAds);
-  }
-
-  @override
-  RouterConfig<Object>? get router => getVariable("router", defaultValue: null);
+  List<GoRoute> get routers => getVariable(
+        SupportedVariable.routers.name,
+        defaultValue: [],
+      );
 
   @override
   InitPriority get initPriority => InitPriority.ON_SPLASH;
+
+  @override
+  FirebaseOptions? get firebaseOptions => getVariable(
+        SupportedVariable.firebaseOptions.name,
+        defaultValue: null,
+      );
 }

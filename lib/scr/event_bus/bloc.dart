@@ -1,7 +1,4 @@
-import 'dart:async';
-
-import 'event_bus_service.dart';
-import 'ttt_event.dart';
+part of 'event_bus_service.dart';
 
 mixin Bloc {
   final List<StreamSubscription<TttEvent>> _subscribedEvents = [];

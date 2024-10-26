@@ -1,6 +1,4 @@
-import 'dart:collection';
-
-import 'ttt_stream.dart';
+part of 'ttt_stream.dart';
 
 class TttList<E> extends TttStream<List<E>> with ListMixin<E> {
   TttList(super.value);

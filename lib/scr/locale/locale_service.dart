@@ -1,7 +1,15 @@
+library ttt_locale;
+
 import 'dart:ui';
 
-import '../base/disposable/ttt_service.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:path/path.dart';
+
+import '../base/app_store.dart';
 import '../stream/ttt_stream.dart';
+
+part 'supported_local.dart';
 
 class LocaleService extends TttService {
   static const Locale enUS = Locale("en", "US");

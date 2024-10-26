@@ -1,6 +1,4 @@
-import 'package:flutter/widgets.dart';
-
-import 'ttt_stream.dart';
+part of 'ttt_stream.dart';
 
 class Watcher extends StatefulWidget {
   static BlocWatcherState? currentWatcherState;
