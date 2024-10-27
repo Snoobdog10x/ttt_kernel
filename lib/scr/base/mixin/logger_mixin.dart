@@ -38,7 +38,7 @@ mixin LoggerMixin {
         "$logLevelColor[${logLevel.name.toUpperCase()}]$reset $magenta[${getLoggerSource()}]$reset $message";
     var appName = "Alphalogy";
 
-    print("[$appName] $actuallyMessage");
+    log("[$appName] $actuallyMessage");
   }
 
   String getLoggerSource() => runtimeType.toString();

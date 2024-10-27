@@ -1,12 +1,12 @@
 part of "ttt_controller.dart";
 
 class TttMultipleControllerProvider extends StatefulWidget {
-  final List<TttController Function()> blocBuilders;
+  final List<TttController Function()> controllerBuilders;
   final Widget view;
 
   const TttMultipleControllerProvider({
     super.key,
-    required this.blocBuilders,
+    required this.controllerBuilders,
     required this.view,
   });
 
@@ -18,9 +18,9 @@ class _TttMultipleBlocProvider extends State<TttMultipleControllerProvider> {
   @override
   Widget build(BuildContext context) {
     var child = widget.view;
-    for (var blocBuilder in widget.blocBuilders.reversed) {
+    for (var blocBuilder in widget.controllerBuilders.reversed) {
       child = TttControllerProvider(
-        blocBuilder: blocBuilder,
+        controllerBuilder: blocBuilder,
         view: child,
       );
     }
