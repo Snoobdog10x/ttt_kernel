@@ -24,3 +24,15 @@ class TttStream<T> extends ValueNotifier<T> {
     return currentValue;
   }
 }
+
+extension IntExtension on int {
+  TttStream<int> get stream => TttStream(this);
+}
+
+extension DoubleExtension on double {
+  TttStream<double> get stream => TttStream(this);
+}
+
+extension BoolExtension on bool {
+  TttStream<bool> get stream => TttStream(this);
+}
