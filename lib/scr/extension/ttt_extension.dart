@@ -31,9 +31,9 @@ extension DurationExtension on num {
   Duration get hours => Duration(milliseconds: (this * 60 * 60)._roundDuration);
 }
 
-extension DelayExtension on num {
+extension DelayExtension on Duration {
   Future<void> delay([void Function()? callback]) {
-    return Future.delayed(millis, callback);
+    return Future.delayed(this, callback);
   }
 }
 

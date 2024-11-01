@@ -14,7 +14,9 @@ mixin AppStoreInterface on EnvironmentMixin, LoggerMixin {
 
   BuildContext get globalContext => navigatorKey.currentContext!;
 
-  Future get initialized;
+  Future get initialize;
+
+  bool get initialized;
 
   GoRouter get router;
 

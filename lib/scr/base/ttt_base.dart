@@ -11,10 +11,12 @@ import 'package:intl/intl.dart' as intl;
 import 'package:path/path.dart' as p;
 import 'package:responsive_framework/responsive_framework.dart';
 
+import '../extension/ttt_extension.dart';
 import '../firebase/firebase.dart';
 import '../locale/locale_service.dart';
 import '../storage/ttt_storage.dart';
 import '../stream/ttt_stream.dart';
+import '../ui/ttt_ui.dart';
 
 part 'app_store_interface.dart';
 part 'disposable/disposable.dart';
@@ -64,14 +66,11 @@ abstract class TttAppState<T extends TttApp> extends State<T>
     await Firebase.initializeApp(options: AppStore.firebaseOptions);
     await FirebaseRemoteService.instance.initService();
     await initServices();
+    await 2.seconds.delay();
     _initializedCompleter.complete();
   }
 
   Future<void> initServices();
-
-  ThemeData? get themeData => null;
-
-  ThemeMode? get themeMode => null;
 
   Widget buildSplash() {
     return Container(
@@ -113,8 +112,8 @@ abstract class TttAppState<T extends TttApp> extends State<T>
                 routerConfig: _router,
                 locale: LocaleService.instance.currentLocale,
                 supportedLocales: SupportedLocale.supportedLocales,
-                theme: themeData,
-                themeMode: themeMode,
+                theme: TttUi.currentTheme,
+                themeMode: TttUi.themeMode,
                 localizationsDelegates: const [
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
@@ -137,5 +136,8 @@ abstract class TttAppState<T extends TttApp> extends State<T>
   GoRouter get router => _router;
 
   @override
-  Future get initialized => _initializedCompleter.future;
+  Future get initialize => _initializedCompleter.future;
+
+  @override
+  bool get initialized => _initializedCompleter.isCompleted;
 }
