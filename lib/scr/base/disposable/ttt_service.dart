@@ -1,29 +1,9 @@
-part of '../app_store.dart';
-
-enum InitPriority {
-  ON_START_UP,
-  ON_SPLASH,
-  AFTER_SPLASH,
-  LAZY,
-}
+part of '../ttt_base.dart';
 
 abstract class TttService with LoggerMixin, Disposable {
-  InitPriority get initPriority;
-
-  int get order => 0;
-
-  late Completer _completer;
+  Completer _completer = Completer();
 
   Future get initialize => _completer.future;
-
-  TttService() {
-    _completer = Completer();
-    AppStore.services.add(this);
-
-    if (initPriority == InitPriority.LAZY) {
-      initService();
-    }
-  }
 
   Future<void> initService() async {
     if (_completer.isCompleted) {
@@ -39,7 +19,7 @@ abstract class TttService with LoggerMixin, Disposable {
   Future<void> disposeService() async {
     if (!_completer.isCompleted) {
       logWarning(
-          "Service is not initialized, please call ${runtimeType}.initService()");
+          "Service is not initialized, please call ${runtimeType.toString()}.initService()");
       return;
     }
 

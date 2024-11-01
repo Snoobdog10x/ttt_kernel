@@ -1,19 +1,6 @@
-part of 'ttt_app.dart';
-
-FirebaseAnalyticsObserver? _firebaseAnalyticsObserver;
+part of '../ttt_base.dart';
 
 extension RouteAppStoreExtension on AppStoreInterface {
-  FirebaseRemoteService get remoteConfigService =>
-      FirebaseRemoteService.instance;
-
-  FirebaseService get firebaseService => FirebaseService.instance;
-
-  FirebaseAnalyticsObserver get firebaseAnalyticsObserver {
-    _firebaseAnalyticsObserver ??=
-        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance);
-    return _firebaseAnalyticsObserver!;
-  }
-
   /// Get a location from route name and parameters.
   ///
   /// This method can't be called during redirects.
@@ -22,12 +9,12 @@ extension RouteAppStoreExtension on AppStoreInterface {
     Map<String, String> pathParameters = const <String, String>{},
     Map<String, dynamic> queryParameters = const <String, dynamic>{},
   }) =>
-      GoRouter.of(context).namedLocation(name,
+      router.namedLocation(name,
           pathParameters: pathParameters, queryParameters: queryParameters);
 
   /// Navigate to a location.
   void go(String location, {Object? extra}) =>
-      GoRouter.of(context).go(location, extra: extra);
+      router.go(location, extra: extra);
 
   /// Navigate to a named route.
   void goNamed(
@@ -36,7 +23,7 @@ extension RouteAppStoreExtension on AppStoreInterface {
     Map<String, dynamic> queryParameters = const <String, dynamic>{},
     Object? extra,
   }) =>
-      GoRouter.of(context).goNamed(
+      router.goNamed(
         name,
         pathParameters: pathParameters,
         queryParameters: queryParameters,
@@ -52,7 +39,7 @@ extension RouteAppStoreExtension on AppStoreInterface {
   ///   it as the same page. The page key will be reused. This will preserve the
   ///   state and not run any page animation.
   Future<T?> push<T extends Object?>(String location, {Object? extra}) =>
-      GoRouter.of(context).push<T>(location, extra: extra);
+      router.push<T>(location, extra: extra);
 
   /// Navigate to a named route onto the page stack.
   Future<T?> pushNamed<T extends Object?>(
@@ -61,7 +48,7 @@ extension RouteAppStoreExtension on AppStoreInterface {
     Map<String, dynamic> queryParameters = const <String, dynamic>{},
     Object? extra,
   }) =>
-      GoRouter.of(context).pushNamed<T>(
+      router.pushNamed<T>(
         name,
         pathParameters: pathParameters,
         queryParameters: queryParameters,
@@ -69,11 +56,11 @@ extension RouteAppStoreExtension on AppStoreInterface {
       );
 
   /// Returns `true` if there is more than 1 page on the stack.
-  bool canPop() => GoRouter.of(context).canPop();
+  bool canPop() => router.canPop();
 
   /// Pop the top page off the Navigator's page stack by calling
   /// [Navigator.pop].
-  void pop<T extends Object?>([T? result]) => GoRouter.of(context).pop(result);
+  void pop<T extends Object?>([T? result]) => router.pop(result);
 
   /// Replaces the top-most page of the page stack with the given URL location
   /// w/ optional query parameters, e.g. `/family/f2/person/p1?color=blue`.
@@ -85,7 +72,7 @@ extension RouteAppStoreExtension on AppStoreInterface {
   ///   it as the same page. The page key will be reused. This will preserve the
   ///   state and not run any page animation.
   void pushReplacement(String location, {Object? extra}) =>
-      GoRouter.of(context).pushReplacement(location, extra: extra);
+      router.pushReplacement(location, extra: extra);
 
   /// Replaces the top-most page of the page stack with the named route w/
   /// optional parameters, e.g. `name='person', pathParameters={'fid': 'f2', 'pid':
@@ -100,7 +87,7 @@ extension RouteAppStoreExtension on AppStoreInterface {
     Map<String, dynamic> queryParameters = const <String, dynamic>{},
     Object? extra,
   }) =>
-      GoRouter.of(context).pushReplacementNamed(
+      router.pushReplacementNamed(
         name,
         pathParameters: pathParameters,
         queryParameters: queryParameters,
@@ -118,7 +105,7 @@ extension RouteAppStoreExtension on AppStoreInterface {
   /// * [pushReplacement] which replaces the top-most page of the page stack but
   ///   always uses a new page key.
   void replace(String location, {Object? extra}) =>
-      GoRouter.of(context).replace<Object?>(location, extra: extra);
+      router.replace<Object?>(location, extra: extra);
 
   /// Replaces the top-most page with the named route and optional parameters,
   /// preserving the page key.
@@ -137,7 +124,7 @@ extension RouteAppStoreExtension on AppStoreInterface {
     Map<String, dynamic> queryParameters = const <String, dynamic>{},
     Object? extra,
   }) {
-    GoRouter.of(context).replaceNamed<Object?>(
+    router.replaceNamed<Object?>(
       name,
       pathParameters: pathParameters,
       queryParameters: queryParameters,

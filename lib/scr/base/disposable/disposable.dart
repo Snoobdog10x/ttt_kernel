@@ -1,4 +1,4 @@
-part of '../app_store.dart';
+part of '../ttt_base.dart';
 
 mixin Disposable on LoggerMixin {
   FutureOr<void> onInit();

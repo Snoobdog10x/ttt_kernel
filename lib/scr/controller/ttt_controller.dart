@@ -3,7 +3,7 @@ library ttt_controller;
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
-import '../base/app_store.dart';
+import '../base/ttt_base.dart';
 import '../di/app_store_di_extension.dart';
 import '../event_bus/event_bus_service.dart';
 import '../stream/ttt_stream.dart';

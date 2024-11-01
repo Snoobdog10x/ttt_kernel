@@ -1,4 +1,6 @@
-part of '../app_store.dart';
+// ignore_for_file: avoid_print
+
+part of '../ttt_base.dart';
 
 enum LogLevel {
   debug,
@@ -36,9 +38,9 @@ mixin LoggerMixin {
 
     var actuallyMessage =
         "$logLevelColor[${logLevel.name.toUpperCase()}]$reset $magenta[${getLoggerSource()}]$reset $message";
-    var appName = "Alphalogy";
+    var appName = "TTT";
 
-    log("[$appName] $actuallyMessage");
+    print("[$appName] $actuallyMessage");
   }
 
   String getLoggerSource() => runtimeType.toString();

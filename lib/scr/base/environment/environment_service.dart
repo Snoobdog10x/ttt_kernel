@@ -1,8 +1,8 @@
-part of '../app_store.dart';
+part of '../ttt_base.dart';
 
 abstract class SharedConstants {
   static const String ASSET_PATH = "assets";
-  static final String LOCALE_PATH = join(ASSET_PATH, "locales");
+  static final String LOCALE_PATH = p.join(ASSET_PATH, "locales");
 }
 
 class EnvironmentService extends TttService implements EnvironmentMixin {
@@ -43,9 +43,6 @@ class EnvironmentService extends TttService implements EnvironmentMixin {
         SupportedVariable.routers.name,
         defaultValue: [],
       );
-
-  @override
-  InitPriority get initPriority => InitPriority.ON_START_UP;
 
   @override
   FirebaseOptions? get firebaseOptions => getVariable(

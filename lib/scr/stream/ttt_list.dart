@@ -100,8 +100,8 @@ class TttList<E> extends TttStream<List<E>> with ListMixin<E> {
   }
 
   @override
-  Iterable<E> whereType<E>() {
-    return value.whereType<E>();
+  Iterable<T> whereType<T>() {
+    return value.whereType<T>();
   }
 
   @override

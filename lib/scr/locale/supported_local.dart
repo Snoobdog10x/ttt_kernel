@@ -1,83 +1,31 @@
 part of 'locale_service.dart';
 
 enum SupportedLocale {
-  ar_SA(
-      locale: Locale("ar", "SA"),
-      displayName: "العربية",
-      flagPath: "assets/flags/ar_sa.png"),
-  bn_BD(
-      locale: Locale("bn", "BD"),
-      displayName: "বাংলা",
-      flagPath: "assets/flags/bn_bd.png"),
-  de_DE(
-      locale: Locale("de", "DE"),
-      displayName: "Deutsch",
-      flagPath: "assets/flags/de_de.png"),
-  en_US(
-      locale: Locale("en", "US"),
-      displayName: "English",
-      flagPath: "assets/flags/en_us.png"),
-  es_ES(
-      locale: Locale("es", "ES"),
-      displayName: "Español",
-      flagPath: "assets/flags/es_es.png"),
-  fr_FR(
-      locale: Locale("fr", "FR"),
-      displayName: "Français",
-      flagPath: "assets/flags/fr_fr.png"),
-  hi_IN(
-      locale: Locale("hi", "IN"),
-      displayName: "हिन्दी",
-      flagPath: "assets/flags/hi_in.png"),
-  id_ID(
-      locale: Locale("id", "ID"),
-      displayName: "Bahasa Indonesia",
-      flagPath: "assets/flags/id_id.png"),
-  ja_JP(
-      locale: Locale("ja", "JP"),
-      displayName: "日本語",
-      flagPath: "assets/flags/ja_jp.png"),
-  ko_KR(
-      locale: Locale("ko", "KR"),
-      displayName: "한국어",
-      flagPath: "assets/flags/ko_kr.png"),
-  pt_BR(
-      locale: Locale("pt", "BR"),
-      displayName: "Português (Brasil)",
-      flagPath: "assets/flags/pt_br.png"),
+  zh_CN(displayName: "中文 (简体)", flagPath: "assets/flags/zh_cn.png"),
+  zh_TW(displayName: "中文 (繁體)", flagPath: "assets/flags/zh_cn.png"),
+  hi_IN(displayName: "हिन्दी", flagPath: "assets/flags/hi_in.png"),
+  en_US(displayName: "English", flagPath: "assets/flags/en_us.png"),
+  es_ES(displayName: "Español", flagPath: "assets/flags/es_es.png"),
+  pt_BR(displayName: "Português (Brasil)", flagPath: "assets/flags/pt_br.png"),
   pt_PT(
-      locale: Locale("pt", "PT"),
-      displayName: "Português (Portugal)",
-      flagPath: "assets/flags/pt_pt.png"),
-  ru_RU(
-      locale: Locale("ru", "RU"),
-      displayName: "Русский",
-      flagPath: "assets/flags/ru_ru.png"),
-  tr_TR(
-      locale: Locale("tr", "TR"),
-      displayName: "Türkçe",
-      flagPath: "assets/flags/tr_tr.png"),
-  ur_PK(
-      locale: Locale("ur", "PK"),
-      displayName: "اردو",
-      flagPath: "assets/flags/ur_pk.png"),
-  zh_CN(
-      locale: Locale("zh", "CN"),
-      displayName: "简体中文",
-      flagPath: "assets/flags/zh_cn.png"),
-  zh_TW(
-      locale: Locale("zh", "TW"),
-      displayName: "繁體中文",
-      flagPath: "assets/flags/zh_cn.png");
+      displayName: "Português (Portugal)", flagPath: "assets/flags/pt_pt.png"),
+  fr_FR(displayName: "Français", flagPath: "assets/flags/fr_fr.png"),
+  ar_SA(displayName: "العربية", flagPath: "assets/flags/ar_sa.png"),
+  bn_BD(displayName: "বাংলা", flagPath: "assets/flags/bn_bd.png"),
+  ru_RU(displayName: "Русский", flagPath: "assets/flags/ru_ru.png"),
+  de_DE(displayName: "Deutsch", flagPath: "assets/flags/de_de.png"),
+  ja_JP(displayName: "日本語", flagPath: "assets/flags/ja_jp.png"),
+  tr_TR(displayName: "Türkçe", flagPath: "assets/flags/tr_tr.png"),
+  ko_KR(displayName: "한국어", flagPath: "assets/flags/ko_kr.png"),
+  id_ID(displayName: "Bahasa Indonesia", flagPath: "assets/flags/id_id.png"),
+  ur_PK(displayName: "اردو", flagPath: "assets/flags/ur_pk.png");
 
   final String displayName;
   final String flagPath;
-  final Locale locale;
 
   const SupportedLocale({
     required this.displayName,
     required this.flagPath,
-    required this.locale,
   });
 
   Image image({
@@ -142,6 +90,11 @@ enum SupportedLocale {
     );
   }
 
+  Locale get locale {
+    var parts = name.split("_");
+    return Locale(parts.first, parts.last);
+  }
+
   static SupportedLocale? fromLocale(Locale locale) {
     var name = _convertLocaleToSupportedLocaleName(locale);
     return values.firstWhereOrNull((e) => e.name == name);
@@ -163,6 +116,9 @@ enum SupportedLocale {
   static List<Locale> get supportedLocales =>
       values.map((e) => e.locale).toList();
 
+  static SupportedLocale get deviceSupportedLocale =>
+      fromLocale(PlatformDispatcher.instance.locale) ?? SupportedLocale.en_US;
+
   static List<SupportedLocale> get orderedSupportedLocales {
     Locale deviceLocale = PlatformDispatcher.instance.locale;
     var supportedLocale = fromLocale(deviceLocale);
@@ -180,6 +136,10 @@ enum SupportedLocale {
 
   String get translatePath {
     var fileName = "$name.json";
-    return join(SharedConstants.LOCALE_PATH, fileName);
+    return join("assets/locales/", fileName);
   }
+}
+
+extension AppStoreLocaleExtension on AppStoreInterface {
+  LocaleService get localeService => LocaleService.instance;
 }

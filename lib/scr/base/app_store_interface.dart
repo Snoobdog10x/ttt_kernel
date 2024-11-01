@@ -1,4 +1,4 @@
-part of 'app_store.dart';
+part of 'ttt_base.dart';
 
 enum ActiveProfile {
   dev,
@@ -7,15 +7,20 @@ enum ActiveProfile {
   production,
 }
 
-abstract class AppStoreInterface with EnvironmentMixin, LoggerMixin {
-  final List<TttService> services = [];
+mixin AppStoreInterface on EnvironmentMixin, LoggerMixin {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  BuildContext get context => navigatorKey.currentContext!;
+  Future<void> forceAppRebuild();
 
-  double get width => MediaQuery.sizeOf(context).width;
+  BuildContext get globalContext => navigatorKey.currentContext!;
 
-  double get height => MediaQuery.sizeOf(context).height;
+  Future get initialized;
 
-  double get ratioPixel => MediaQuery.of(context).devicePixelRatio;
+  GoRouter get router;
+
+  double get width => MediaQuery.sizeOf(globalContext).width;
+
+  double get height => MediaQuery.sizeOf(globalContext).height;
+
+  double get ratioPixel => MediaQuery.of(globalContext).devicePixelRatio;
 }

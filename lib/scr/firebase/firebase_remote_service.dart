@@ -1,4 +1,4 @@
-part of 'ttt_app.dart';
+part of 'firebase.dart';
 
 class FirebaseRemoteService extends TttService {
   static FirebaseRemoteService instance = FirebaseRemoteService._();
@@ -19,10 +19,4 @@ class FirebaseRemoteService extends TttService {
       onError: (_) {},
     );
   }
-
-  @override
-  InitPriority get initPriority => InitPriority.ON_SPLASH;
-
-  @override
-  int get order => -2;
 }
