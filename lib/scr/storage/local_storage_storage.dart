@@ -1,8 +1,6 @@
-import 'package:shared_preferences/shared_preferences.dart';
+part of 'ttt_storage.dart';
 
-import '../base/ttt_base.dart';
-
-class LocalStorageService extends TttService {
+class LocalStorageService extends TttService with Bloc {
   static final LocalStorageService instance = LocalStorageService._();
 
   LocalStorageService._();
@@ -17,43 +15,57 @@ class LocalStorageService extends TttService {
     _sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  Future<void> setCache<T extends Object?>(String key, T value) async {
+  Future<StorageOperator?> _setCache<T>(String key, T value) async {
     if (value == null) {
-      logError("Key $key is trying to set null value!");
-      return;
+      return null;
+    }
+
+    var operator = StorageOperator.CREATE;
+    if (containsKey(key)) {
+      operator = StorageOperator.UPDATE;
     }
 
     if (value is String) {
       await _sharedPreferences.setString(key, value);
-      return;
+      return operator;
     }
 
     if (value is bool) {
       await _sharedPreferences.setBool(key, value);
-      return;
+      return operator;
     }
 
     if (value is int) {
       await _sharedPreferences.setInt(key, value);
-      return;
+      return operator;
     }
 
     if (value is double) {
       await _sharedPreferences.setDouble(key, value);
-      return;
+      return operator;
     }
 
     if (value is List<String>) {
       await _sharedPreferences.setStringList(key, value);
-      return;
+      return operator;
     }
 
     if (value is Iterable<String>) {
       await _sharedPreferences.setStringList(key, value.toList());
+      return operator;
+    }
+
+    return null;
+  }
+
+  Future<void> setCache<T extends Object?>(String key, T value) async {
+    final operator = await _setCache(key, value);
+    if (operator == null) {
       return;
     }
 
-    logError("Not support type ${T.runtimeType.toString()}");
+    var event = StorageEvent<T>(key: key, value: value, operator: operator);
+    emit(event);
   }
 
   T? getCache<T extends Object?>(String key) {
@@ -82,6 +94,12 @@ class LocalStorageService extends TttService {
 
   Future<void> removeCache(String key) async {
     await _sharedPreferences.remove(key);
+    var event = StorageEvent<Object?>(
+      key: key,
+      value: null,
+      operator: StorageOperator.DELETE,
+    );
+    emit(event);
   }
 
   bool containsKey(String key) {
@@ -89,6 +107,15 @@ class LocalStorageService extends TttService {
   }
 
   Future<void> clearCache() async {
+    var keys = _sharedPreferences.getKeys();
     await _sharedPreferences.clear();
+    for (var key in keys) {
+      var event = StorageEvent<Object?>(
+        key: key,
+        value: null,
+        operator: StorageOperator.DELETE,
+      );
+      emit(event);
+    }
   }
 }

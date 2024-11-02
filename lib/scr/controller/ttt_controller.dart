@@ -4,7 +4,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
 import '../base/ttt_base.dart';
-import '../event_bus/event_bus_service.dart';
 import '../stream/ttt_stream.dart';
 
 part 'binding.dart';
@@ -23,10 +22,6 @@ abstract class TttController extends State<TttControllerProvider>
     super.initState();
     logInfo("Init ${runtimeType.toString()}");
     onInit();
-
-    if (this is Bloc) {
-      (this as Bloc).listenEvents();
-    }
 
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       onReady();
@@ -50,11 +45,6 @@ abstract class TttController extends State<TttControllerProvider>
     _rootState.deleteController(this);
     super.dispose();
     logInfo("Dispose ${runtimeType.toString()}");
-
-    if (this is Bloc) {
-      (this as Bloc).disposeSubscriptions();
-    }
-
     onDispose();
   }
 

@@ -21,8 +21,6 @@ mixin Bloc {
     return _subscribedEvents.any((element) => element is StreamSubscription<E>);
   }
 
-  void listenEvents();
-
   void disposeSubscriptions() {
     for (var e in _subscribedEvents) {
       e.cancel();
