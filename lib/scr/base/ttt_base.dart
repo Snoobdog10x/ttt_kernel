@@ -26,6 +26,7 @@ part 'environment/environment_mixin.dart';
 part 'environment/environment_service.dart';
 part 'mixin/logger_mixin.dart';
 part 'router/route_appstore_extension.dart';
+part 'router/ttt_navigator_observer.dart';
 
 AppStoreInterface get AppStore => _appStore;
 late final AppStoreInterface _appStore;
@@ -46,11 +47,14 @@ abstract class TttAppState<T extends TttApp> extends State<T>
     with EnvironmentMixin, LoggerMixin, AppStoreInterface {
   final Completer _initializedCompleter = Completer();
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+  final TttNavigatorObserver _navigatorObserver = TttNavigatorObserver();
 
   late final GoRouter _router = GoRouter(
     navigatorKey: AppStore.navigatorKey,
     routes: AppStore.routers,
-    observers: [],
+    observers: [
+      _navigatorObserver,
+    ],
   );
 
   @mustCallSuper
@@ -153,4 +157,7 @@ abstract class TttAppState<T extends TttApp> extends State<T>
 
   @override
   double get ratioPixel => MediaQuery.devicePixelRatioOf(context);
+
+  @override
+  TttNavigatorObserver get navigatorObserver => _navigatorObserver;
 }

@@ -13,6 +13,7 @@ mixin AppStoreInterface on EnvironmentMixin, LoggerMixin {
   Future<void> forceAppRebuild();
 
   BuildContext get globalContext => navigatorKey.currentContext!;
+  TttNavigatorObserver get navigatorObserver;
 
   Future get initialize;
 

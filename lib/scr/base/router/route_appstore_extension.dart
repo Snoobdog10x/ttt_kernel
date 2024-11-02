@@ -12,6 +12,19 @@ extension RouteAppStoreExtension on AppStoreInterface {
       router.namedLocation(name,
           pathParameters: pathParameters, queryParameters: queryParameters);
 
+  void until<T extends Object?>({
+    String? route,
+    T? result,
+  }) {
+    var currentLocation =
+        router.routerDelegate.currentConfiguration.matches.last.matchedLocation;
+    while (currentLocation != route && canPop()) {
+      pop(result);
+      currentLocation = router
+          .routerDelegate.currentConfiguration.matches.last.matchedLocation;
+    }
+  }
+
   /// Navigate to a location.
   void go(String location, {Object? extra}) =>
       router.go(location, extra: extra);
