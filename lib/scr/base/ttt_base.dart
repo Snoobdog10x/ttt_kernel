@@ -64,7 +64,7 @@ abstract class TttAppState<T extends TttApp> extends State<T>
     await AppStore.localStorageService.initService();
     await AppStore.localeService.initService();
     await Firebase.initializeApp(options: AppStore.firebaseOptions);
-    await FirebaseRemoteService.instance.initService();
+    await AppStore.firebaseRemoteService.initService();
     await initServices();
     await 2.seconds.delay();
     _initializedCompleter.complete();
