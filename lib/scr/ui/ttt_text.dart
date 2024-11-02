@@ -85,7 +85,7 @@ class TttText extends AutoSizeText {
     );
   }
 
-  static Widget rich({required List<TttText> children}) {
+  static AutoSizeText rich({required List<TttText> children}) {
     return AutoSizeText.rich(
       TextSpan(
         children: children

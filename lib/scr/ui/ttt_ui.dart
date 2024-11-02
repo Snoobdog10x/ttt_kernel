@@ -19,7 +19,6 @@ class _TttUi extends TttUiInterface {
 
   set themeMode(ThemeMode themeMode) {
     _themeMode.value = themeMode;
-
     if (!AppStore.initialized) {
       return;
     }
@@ -32,6 +31,7 @@ class _TttUi extends TttUiInterface {
     if (!AppStore.initialized) {
       return;
     }
+
     AppStore.forceAppRebuild();
   }
 }

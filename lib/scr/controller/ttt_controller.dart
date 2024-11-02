@@ -4,7 +4,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
 import '../base/ttt_base.dart';
-import '../di/app_store_di_extension.dart';
 import '../event_bus/event_bus_service.dart';
 import '../stream/ttt_stream.dart';
 
@@ -15,13 +14,14 @@ part 'ttt_view.dart';
 
 abstract class TttController extends State<TttControllerProvider>
     with LoggerMixin, Disposable, AutomaticKeepAliveClientMixin {
+  late _BindingWidgetState _rootState;
+
   @protected
   @mustCallSuper
   @override
   void initState() {
-    logInfo("Init ${runtimeType.toString()}");
-    AppStore.registerByRuntimeType(this, tag: widget.tag);
     super.initState();
+    logInfo("Init ${runtimeType.toString()}");
     onInit();
 
     if (this is Bloc) {
@@ -33,6 +33,13 @@ abstract class TttController extends State<TttControllerProvider>
     });
   }
 
+  @override
+  void didChangeDependencies() {
+    _rootState = context.rootState;
+    _rootState.putController(this);
+    super.didChangeDependencies();
+  }
+
   @protected
   void onReady() {}
 
@@ -40,6 +47,7 @@ abstract class TttController extends State<TttControllerProvider>
   @mustCallSuper
   @override
   void dispose() {
+    _rootState.deleteController(this);
     super.dispose();
     logInfo("Dispose ${runtimeType.toString()}");
 
@@ -47,7 +55,6 @@ abstract class TttController extends State<TttControllerProvider>
       (this as Bloc).disposeSubscriptions();
     }
 
-    AppStore.removeByRuntimeType(runtimeType, tag: widget.tag);
     onDispose();
   }
 
