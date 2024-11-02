@@ -7,13 +7,14 @@ mixin Bloc {
       EventBusService.instance.emit(event);
 
   void on<E extends TttEvent>(
-    void Function(E event) onEvent,
-  ) {
+    void Function(E event) onEvent, {
+    String? tag,
+  }) {
     if (_hasSubscribeEvent<E>()) {
       return;
     }
 
-    var subscription = EventBusService.instance.subscribe<E>(onEvent);
+    var subscription = EventBusService.instance.subscribe<E>(onEvent, tag: tag);
     _subscribedEvents.add(subscription);
   }
 

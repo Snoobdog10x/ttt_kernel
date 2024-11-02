@@ -25,11 +25,12 @@ mixin EventStreamingMixin {
 
   StreamSubscription<E> subscribe<E extends TttEvent>(
     void Function(E) onData, {
+    String? tag,
     Function? onError,
     void Function()? onDone,
     bool? cancelOnError,
   }) {
-    return on<E>().listen(
+    return on<E>(tag: tag).listen(
       onData,
       onError: onError,
       onDone: onDone,
