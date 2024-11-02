@@ -45,6 +45,8 @@ abstract class TttApp extends StatefulWidget {
 abstract class TttAppState<T extends TttApp> extends State<T>
     with EnvironmentMixin, LoggerMixin, AppStoreInterface {
   final Completer _initializedCompleter = Completer();
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
   late final GoRouter _router = GoRouter(
     navigatorKey: AppStore.navigatorKey,
     routes: AppStore.routers,
@@ -128,9 +130,8 @@ abstract class TttAppState<T extends TttApp> extends State<T>
   }
 
   @override
-  Future<void> forceAppRebuild() async {
-    await WidgetsBinding.instance.reassembleApplication();
-  }
+  Future<void> forceAppRebuild() =>
+      WidgetsBinding.instance.reassembleApplication();
 
   @override
   GoRouter get router => _router;
@@ -140,4 +141,16 @@ abstract class TttAppState<T extends TttApp> extends State<T>
 
   @override
   bool get initialized => _initializedCompleter.isCompleted;
+
+  @override
+  GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
+
+  @override
+  double get width => MediaQuery.sizeOf(context).width;
+
+  @override
+  double get height => MediaQuery.sizeOf(context).height;
+
+  @override
+  double get ratioPixel => MediaQuery.devicePixelRatioOf(context);
 }

@@ -8,7 +8,7 @@ enum ActiveProfile {
 }
 
 mixin AppStoreInterface on EnvironmentMixin, LoggerMixin {
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState> get navigatorKey;
 
   Future<void> forceAppRebuild();
 
@@ -20,9 +20,9 @@ mixin AppStoreInterface on EnvironmentMixin, LoggerMixin {
 
   GoRouter get router;
 
-  double get width => MediaQuery.sizeOf(globalContext).width;
+  double get width;
 
-  double get height => MediaQuery.sizeOf(globalContext).height;
+  double get height;
 
-  double get ratioPixel => MediaQuery.of(globalContext).devicePixelRatio;
+  double get ratioPixel;
 }
