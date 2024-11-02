@@ -1,9 +1,12 @@
 library ttt_ui;
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import '../base/ttt_base.dart';
 import '../stream/ttt_stream.dart';
+
+part 'ttt_text.dart';
 
 _TttUi TttUi = _TttUi();
 

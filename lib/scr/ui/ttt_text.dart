@@ -1,8 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/widgets.dart';
+part of 'ttt_ui.dart';
 
 class TttText extends AutoSizeText {
-  // ignore_for_file: deprecated_member_use
   const TttText(
     super.data, {
     super.key,
