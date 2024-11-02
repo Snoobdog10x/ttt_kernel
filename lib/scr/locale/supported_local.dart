@@ -143,3 +143,7 @@ enum SupportedLocale {
 extension AppStoreLocaleExtension on AppStoreInterface {
   LocaleService get localeService => LocaleService.instance;
 }
+
+String translate(String value) {
+  return AppStore.localeService.translate(value);
+}
