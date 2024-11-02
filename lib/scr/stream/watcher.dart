@@ -1,7 +1,7 @@
 part of 'ttt_stream.dart';
 
 class Watcher extends StatefulWidget {
-  static BlocWatcherState? currentWatcherState;
+  static WatcherState? currentWatcherState;
   final Widget Function() builder;
 
   const Watcher(
@@ -10,10 +10,10 @@ class Watcher extends StatefulWidget {
   });
 
   @override
-  State<Watcher> createState() => BlocWatcherState();
+  State<Watcher> createState() => WatcherState();
 }
 
-class BlocWatcherState extends State<Watcher> {
+class WatcherState extends State<Watcher> {
   final Set<TttStream> _subscribedStreams = {};
 
   @override
