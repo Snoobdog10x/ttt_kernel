@@ -606,7 +606,7 @@ class TttNumNullable extends TttStream<num?> {
   }
 }
 
-extension TttStreamDoubleExt on TttStream<double> {
+extension TttDoubleExt on TttStream<double> {
   /// Addition operator.
   TttStream<double> operator +(num other) {
     value = value + other;
@@ -714,7 +714,7 @@ extension TttStreamDoubleExt on TttStream<double> {
   double truncateToDouble() => value.truncateToDouble();
 }
 
-extension TttStreamnDoubleExt on TttStream<double?> {
+extension TttNullableDoubleExt on TttStream<double?> {
   /// Addition operator.
   TttStream<double?>? operator +(num other) {
     if (value != null) {
@@ -855,25 +855,25 @@ extension TttStreamnDoubleExt on TttStream<double?> {
   double? truncateToDouble() => value?.truncateToDouble();
 }
 
-class TttStreamDouble extends TttStream<double> {
-  TttStreamDouble(super.initial);
+class TttDouble extends TttStream<double> {
+  TttDouble(super.initial);
 }
 
-class TttStreamnDouble extends TttStream<double?> {
-  TttStreamnDouble([super.initial]);
+class TttNullableDouble extends TttStream<double?> {
+  TttNullableDouble([super.initial]);
 }
 
-class TttStreamInt extends TttStream<int> {
-  TttStreamInt(super.initial);
+class TttInt extends TttStream<int> {
+  TttInt(super.initial);
 
   /// Addition operator.
-  TttStreamInt operator +(int other) {
+  TttInt operator +(int other) {
     value = value + other;
     return this;
   }
 
   /// Subtraction operator.
-  TttStreamInt operator -(int other) {
+  TttInt operator -(int other) {
     value = value - other;
     return this;
   }
@@ -899,7 +899,7 @@ class TttNullableInt extends TttStream<int?> {
   }
 }
 
-extension TttStreamIntExt on TttStream<int> {
+extension TttIntExt on TttStream<int> {
   /// Bit-wise and operator.
   ///
   /// Treating both `this` and [other] as sufficiently large two's component
