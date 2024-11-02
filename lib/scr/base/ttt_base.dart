@@ -83,23 +83,23 @@ abstract class TttAppState<T extends TttApp> extends State<T>
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initializedCompleter.future,
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          bool isRtl = intl.Bidi.isRtlLanguage(
-              AppStore.localeService.currentLocale.languageCode);
-          return Directionality(
-            textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-            child: Material(
-              child: buildSplash(),
-            ),
-          );
-        }
+    return ScreenUtilInit(
+      designSize: designSize,
+      child: FutureBuilder(
+        future: _initializedCompleter.future,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            bool isRtl = intl.Bidi.isRtlLanguage(
+                AppStore.localeService.currentLocale.languageCode);
+            return Directionality(
+              textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+              child: Material(
+                child: buildSplash(),
+              ),
+            );
+          }
 
-        return ScreenUtilInit(
-          designSize: designSize,
-          child: ResponsiveBreakpoints(
+          return ResponsiveBreakpoints(
             breakpoints: const [
               Breakpoint(start: 0, end: 450, name: MOBILE),
               Breakpoint(start: 451, end: 800, name: TABLET),
@@ -121,9 +121,9 @@ abstract class TttAppState<T extends TttApp> extends State<T>
                 ],
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
