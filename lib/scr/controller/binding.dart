@@ -22,7 +22,7 @@ class BindingWidget extends StatefulWidget {
     if (state == null) {
       throw Exception(
         """Not found _BindingWidgetState!!
-        Please make sure you warp parent of this context with BindingWidget""",
+        Please make sure you wrap parent of this context with BindingWidget""",
       );
     }
 
