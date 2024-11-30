@@ -42,9 +42,15 @@ class TttStream<T> with LoggerMixin, Disposable, EventStreamingMixin<T> {
     return _value;
   }
 
+  void close() {
+    onDispose();
+  }
+
+  @protected
   @override
   void onInit() {}
 
+  @protected
   @override
   void onDispose() {
     closeStream();
