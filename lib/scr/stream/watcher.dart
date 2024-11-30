@@ -1,7 +1,7 @@
 part of 'ttt_stream.dart';
 
 class Watcher extends StatefulWidget {
-  static WatcherState? currentWatcherState;
+  static WatcherState? _currentWatcherState;
   final Widget Function() builder;
 
   const Watcher(
@@ -14,34 +14,34 @@ class Watcher extends StatefulWidget {
 }
 
 class WatcherState extends State<Watcher> {
-  final Set<TttStream> _subscribedStreams = {};
+  final Map<TttStream, StreamSubscription> _subscribedStreams = {};
 
   @override
   void initState() {
     super.initState();
   }
 
-  void _onValueChanged() {
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {});
-  }
-
   void subscribeStream(TttStream stream) {
-    if (_subscribedStreams.contains(stream)) {
+    if (_subscribedStreams.containsKey(stream)) {
       return;
     }
 
-    _subscribedStreams.add(stream);
-    stream.addListener(_onValueChanged);
+    _subscribedStreams[stream] = stream.subscribe((_) => _rebuild());
   }
 
   void _disposeStreams() {
-    for (var stream in _subscribedStreams) {
-      stream.removeListener(_onValueChanged);
+    for (var element in _subscribedStreams.values) {
+      element.cancel();
     }
+
+    _subscribedStreams.clear();
+  }
+
+  void _rebuild() {
+    if (!mounted) {
+      return;
+    }
+    setState(() {});
   }
 
   @override
@@ -52,14 +52,14 @@ class WatcherState extends State<Watcher> {
 
   @override
   Widget build(BuildContext context) {
-    var previousState = Watcher.currentWatcherState;
-    Watcher.currentWatcherState = this;
+    var previousState = Watcher._currentWatcherState;
+    Watcher._currentWatcherState = this;
     var child = widget.builder();
     if (_subscribedStreams.isEmpty) {
       throw Exception("child of Watcher must call Ttt stream");
     }
 
-    Watcher.currentWatcherState = previousState;
+    Watcher._currentWatcherState = previousState;
     return child;
   }
 }

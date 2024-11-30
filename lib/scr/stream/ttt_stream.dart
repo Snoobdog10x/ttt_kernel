@@ -6,6 +6,7 @@ import 'dart:collection';
 import 'package:flutter/widgets.dart';
 
 import '../base/ttt_base.dart';
+import '../event_bus/event_bus_service.dart';
 
 part 'ttt_bool.dart';
 part 'ttt_list.dart';
@@ -17,70 +18,36 @@ part 'watcher.dart';
 
 typedef StreamOnValue<T> = void Function(T value);
 
-class TttStreamSubscription<T> {
-  bool canceled = false;
-  late final TttStream<T> _stream;
-  final StreamOnValue<T> _onValue;
+class TttStream<T> with LoggerMixin, Disposable, EventStreamingMixin<T> {
+  T _value;
 
-  TttStreamSubscription(this._stream, this._onValue);
+  TttStream(this._value);
 
-  void _listener() {
-    _onValue(_stream.value);
+  set value(T value) {
+    emit(value);
+    _value = value;
   }
 
-  void _listen() {
-    _stream.addListener(_listen);
+  void notifyListeners() {
+    emit(_value);
   }
 
-  void cancel() {
-    if (canceled) {
-      return;
-    }
-
-    canceled = true;
-    _stream.removeListener(_listener);
-  }
-}
-
-class TttStream<T> extends ValueNotifier<T> with LoggerMixin {
-  final Completer _completer = Completer();
-
-  TttStream(super.value);
-
-  Future<void> onValue(StreamOnValue<T> onValue) async {
-    void listener() => onValue(value);
-    addListener(listener);
-    await _completer.future;
-    removeListener(listener);
-  }
-
-  TttStreamSubscription<T> listen(StreamOnValue<T> onValue) {
-    var subscription = TttStreamSubscription(this, onValue);
-    subscription._listen();
-    return subscription;
-  }
-
-  @override
-  void dispose() {
-    if (_completer.isCompleted) {
-      logError("Stream has been closed please init new one");
-      return;
-    }
-
-    _completer.complete();
-    super.dispose();
-  }
-
-  @override
   T get value {
-    var currentWatcher = Watcher.currentWatcherState;
-    var currentValue = super.value;
-    if (currentWatcher == null) {
-      return currentValue;
+    var currentProxy = Watcher._currentWatcherState;
+    if (currentProxy == null) {
+      return _value;
     }
 
-    currentWatcher.subscribeStream(this);
-    return currentValue;
+    currentProxy.subscribeStream(this);
+    return _value;
+  }
+
+  @override
+  void onInit() {}
+
+  @override
+  void onDispose() {
+    closeStream();
   }
 }
 
