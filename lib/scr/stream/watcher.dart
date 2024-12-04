@@ -18,12 +18,12 @@ class WatcherState extends State<Watcher> {
     super.initState();
   }
 
-  void subscribeStream(TttStream stream) {
+  void subscribeStream<T>(TttStream<T> stream) {
     if (_subscribedStreams.containsKey(stream)) {
       return;
     }
 
-    _subscribedStreams[stream] = stream.subscribe((_) => _rebuild());
+    _subscribedStreams[stream] = stream.subscribe<T>((_) => _rebuild());
   }
 
   void _disposeStreams() {

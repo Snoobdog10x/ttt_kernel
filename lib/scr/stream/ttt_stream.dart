@@ -38,7 +38,7 @@ class TttStream<T> with LoggerMixin, Disposable, EventStreamingMixin<T> {
       return _value;
     }
 
-    currentProxy.subscribeStream(this);
+    currentProxy.subscribeStream<T>(this);
     return _value;
   }
 
