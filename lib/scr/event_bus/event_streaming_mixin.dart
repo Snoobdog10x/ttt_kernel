@@ -1,6 +1,6 @@
 part of 'event_bus_service.dart';
 
-mixin EventStreamingMixin<T> on Disposable {
+mixin EventStreamingMixin<T> {
   Stream<T> get _stream => _streamController.stream;
   final StreamController<T> _streamController = StreamController.broadcast();
 

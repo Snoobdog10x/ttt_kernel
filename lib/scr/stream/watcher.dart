@@ -4,10 +4,7 @@ class Watcher extends StatefulWidget {
   static WatcherState? _currentWatcherState;
   final Widget Function() builder;
 
-  const Watcher(
-    this.builder, {
-    super.key,
-  });
+  const Watcher(this.builder, {super.key});
 
   @override
   State<Watcher> createState() => WatcherState();
