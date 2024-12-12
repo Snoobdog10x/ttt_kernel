@@ -22,14 +22,6 @@ abstract class TttView<T extends TttController> extends StatelessWidget
   Watcher watch(WatcherBuilder builder) {
     return Watcher(builder);
   }
-
-  double getScreenHeight(BuildContext context) {
-    return MediaQuery.sizeOf(context).height;
-  }
-
-  double getScreenWidth(BuildContext context) {
-    return MediaQuery.sizeOf(context).width;
-  }
 }
 
 class ControlBuilder<T extends TttController> extends TttView<T> {
